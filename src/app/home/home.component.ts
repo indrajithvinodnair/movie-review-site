@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  trendingMovies: any;
+  theatreMovies: any;
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.getTrendingMovies();
+    this.gettheatreMovies();
+  }
+
+  getTrendingMovies() {
+    this.http.get('http://localhost:4200/assets/data/trending-movies.json').subscribe((movies) => {
+      this.trendingMovies = movies;
+      console.log(this.trendingMovies);
+    });
+
+  }
+
+  gettheatreMovies() {
+    this.http.get('http://localhost:4200/assets/data/theatre-movies.json').subscribe((movies) => {
+      this.theatreMovies = movies;
+
+    });
   }
 
 }
